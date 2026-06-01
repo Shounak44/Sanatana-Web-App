@@ -930,19 +930,60 @@ function doSearch(q){
 }
 
 /* =====================================================================
-   DAILY VERSE (rotates across Gita + Isha)
+   DAILY VERSE 
    ===================================================================== */
 function initDaily(){
   const pool=[];
-  VERSES.forEach(v=>pool.push({ref:`GITA ${v.c}.${v.v}`,ch:GITA_CHAPTERS[v.c],s:v.s,r:v.r,t:v.t}));
-  ISHA.forEach(v=>pool.push({ref:`ĪŚHA UPANIṢHAD ${v.v}`,ch:'Shukla Yajurveda',s:v.s,r:v.r,t:v.t}));
+
+  VERSES.forEach(v =>
+    pool.push({
+      ref:`GITA ${v.c}.${v.v}`,
+      ch:GITA_CHAPTERS[v.c],
+      s:v.s,
+      r:v.r,
+      t:v.t
+    })
+  );
+
+  ISHA.forEach(v =>
+    pool.push({
+      ref:`ĪŚHA UPANIṢHAD ${v.v}`,
+      ch:'Shukla Yajurveda',
+      s:v.s,
+      r:v.r,
+      t:v.t
+    })
+  );
+
+  KENA.forEach(v =>
+    pool.push({
+      ref:`KENA UPANIṢHAD ${v.v}`,
+      ch:'Samaveda',
+      s:v.s,
+      r:v.r,
+      t:v.t
+    })
+  );
+
   const now=new Date();
   const start=new Date(now.getFullYear(),0,0);
   const dayOfYear=Math.floor((now-start)/86400000);
+
   const pick=pool[dayOfYear % pool.length];
-  const opts={weekday:'long',year:'numeric',month:'long',day:'numeric'};
-  document.getElementById('daily-date-label').textContent=now.toLocaleDateString('en-US',opts).toUpperCase();
-  document.getElementById('daily-badge').textContent=now.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+  const opts={
+    weekday:'long',
+    year:'numeric',
+    month:'long',
+    day:'numeric'
+  };
+
+  document.getElementById('daily-date-label').textContent=
+    now.toLocaleDateString('en-US',opts).toUpperCase();
+
+  document.getElementById('daily-badge').textContent=
+    now.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
   document.getElementById('daily-ref').textContent=pick.ref;
   document.getElementById('daily-ch').textContent=pick.ch;
   document.getElementById('daily-skt').textContent=pick.s;
